@@ -9,6 +9,10 @@ export default function NuevoVehiculo() {
         navigate('/vehiculos');
     };
 
+    const cancelar = () => {
+        navigate('/vehiculos');
+    }
+
     return (
         <div className="p-6 w-1/2 border-2 border-gray-500 rounded-2xl">
             <h1 className="text-2xl font-bold mb-4">Registrar Nuevo Vehículo</h1>
@@ -40,6 +44,11 @@ export default function NuevoVehiculo() {
                         onChange={(e) => setVehiculo({ ...vehiculo, placa: e.target.value })}
                     />
                 </div>
+                <button onClick={cancelar}
+                    className="bg-gray-500 mr-5 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
+                >
+                    Cancelar
+                </button>
                 <button
                     type="submit"
                     className="bg-indigo-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none"
