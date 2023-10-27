@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Vehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
@@ -18,7 +19,11 @@ export default function Vehiculos() {
 <div className="p-6">
   <div className='flex justify-between'>
     <h1 className="text-2xl font-bold mb-4">Lista de Vehículos</h1>
-    <button type="button" class="text-white bg-indigo-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2   focus:outline-none dark:focus:ring-indigo-400">Crear Nuevo</button>
+    <Link to="/nuevo-vehiculo">
+          <button className="text-white bg-indigo-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-indigo-400">
+            Crear Nuevo
+          </button>
+        </Link>
   </div>
 
   <div className="overflow-x-auto shadow-md rounded-2xl mt-5">
