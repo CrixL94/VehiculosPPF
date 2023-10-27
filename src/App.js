@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className="flex">
         <VerticalMenu />
-        <div className="ml-4 p-4">
+        <div className="ml-4 w-full p-5">
           <Routes>
             <Route path="/vehiculos" element={<Vehiculos />} />
             <Route path="/entradas-salidas" element={<EntradasSalidas />} />
