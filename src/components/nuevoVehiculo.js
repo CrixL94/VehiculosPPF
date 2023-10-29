@@ -112,7 +112,7 @@ export default function NuevoVehiculo() {
     }
 
     return (
-        <div className='flex justify-center items-center h-screen'>
+        <div className='flex justify-center items-center mt-20'>
             <div className="p-6 w-1/2 border rounded-2xl shadow-md">
                 <h1 className="text-2xl font-bold mb-4">
                     {modoEdicion ? 'Actualizar Vehículo' : 'Crear Nuevo Vehiculo'}
