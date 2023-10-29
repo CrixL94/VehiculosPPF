@@ -66,9 +66,13 @@ export default function NuevaEntradaSalida() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registro creado con éxito',
+                    showConfirmButton: false,
+                    timer: 2000,
                 });
 
-                navigate('/entradas-salidas'); // Redirige a la lista de entradas y salidas
+                setTimeout(() => {
+                    navigate('/entradas-salidas');
+                }, 2000); // Redirige a la lista de entradas y salidas
             })
             .catch((error) => {
                 Swal.fire({
