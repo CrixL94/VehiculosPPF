@@ -51,7 +51,6 @@ export default function NuevoVehiculo() {
             .then((data) => {
                 // Si la solicitud es exitosa, muestra la notificacion SweetAlert
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
                     title: 'Tu registro ha sido guardado',
                     showConfirmButton: false,
@@ -86,7 +85,6 @@ export default function NuevoVehiculo() {
             .then((data) => {
                 // Si la solicitud es exitosa, muestra la notificacion SweetAlert
                 Swal.fire({
-                    position: 'top-end',
                     icon: 'success',
                     title: 'Los cambios han sido guardados',
                     showConfirmButton: false,

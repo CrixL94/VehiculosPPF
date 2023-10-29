@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 export default function Vehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
+  const [busquedaMarca, setBusquedaMarca] = useState('');
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/get-vehiculos')
@@ -18,7 +19,7 @@ export default function Vehiculos() {
       });
   }, []);
 
-  // Funcion para eliminar de un vehiculo
+  // Funcion para eliminar un vehiculo
   const eliminarVehiculo = (id) => {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -55,10 +56,27 @@ export default function Vehiculos() {
     });
   };
 
+  // Funcion para filtrar la busqueda por marca
+  const buscarVehiculo = (e) => {
+    setBusquedaMarca(e.target.value);
+  };
+
+  // Filtrar vehiculos por marca
+  const vehiculosFiltrados = vehiculos.filter((vehiculo) =>
+    vehiculo.marca.toLowerCase().includes(busquedaMarca.toLowerCase())
+  );
+
   return (
     <div className="p-6">
-      <div className='flex justify-between'>
+      <div className='flex items-center justify-between'>
         <h1 className="text-2xl font-bold mb-4">Lista de Vehículos</h1>
+        <input
+          type="text"
+          value={busquedaMarca}
+          onChange={buscarVehiculo}
+          placeholder="Buscar por marca"
+          className="w-[25rem] border p-2 rounded-lg focus:outline-none"
+        />
         <Link to="/nuevo-vehiculo">
           <button className="text-white bg-indigo-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-indigo-400">
             Crear Nuevo
@@ -79,39 +97,38 @@ export default function Vehiculos() {
               <th scope="col" className="px-6 py-3">
                 Placa
               </th>
-              <th scope="col">
-
-              </th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody className='font-medium'>
-            {vehiculos.map((vehiculo, index) => (
-              <tr key={index} className="border-t border-2">
-                <td className="px-6 py-4">
-                  {vehiculo.marca}
-                </td>
-                <td className="px-6 py-4">
-                  {vehiculo.modelo}
-                </td>
-                <td className="px-6 py-4">
-                  {vehiculo.placa}
-                </td>
-                <td className="py-4">
-                  <Link to={`/nuevo-vehiculo/${vehiculo._id}`}>
-                    <button className="text-gray-900 font-semibold text-sm">
-                      <FontAwesomeIcon icon={faEdit} />
+            {vehiculosFiltrados.length > 0 ? (
+              vehiculosFiltrados.map((vehiculo, index) => (
+                <tr key={index} className="border-t border-2">
+                  <td className="px-6 py-4">{vehiculo.marca}</td>
+                  <td className="px-6 py-4">{vehiculo.modelo}</td>
+                  <td className="px-6 py-4">{vehiculo.placa}</td>
+                  <td className="py-4">
+                    <Link to={`/nuevo-vehiculo/${vehiculo._id}`}>
+                      <button className="text-gray-900 font-semibold text-sm">
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                    </Link>
+                    <button onClick={() => eliminarVehiculo(vehiculo._id)} className="text-red-700 font-semibold text-sm ml-5">
+                      <FontAwesomeIcon icon={faTrash} />
                     </button>
-                  </Link>
-                  <button onClick={() => eliminarVehiculo(vehiculo._id)} className="text-red-700 font-semibold text-sm ml-5">
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center items-center justify-center py-4">
+                  No existen registros de esa marca.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
     </div>
   );
 }
-
