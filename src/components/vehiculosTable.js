@@ -26,8 +26,8 @@ export default function Vehiculos() {
         </Link>
   </div>
 
-  <div className="overflow-x-auto shadow-md rounded-2xl mt-5">
-    <table className="w-full text-sm text-left table-auto">
+  <div className="overflow-x-auto shadow-md rounded-2xl mt-5 h-[30rem]">
+    <table className="w-full text-sm text-left table-auto overflow-auto">
       <thead className="text-xs uppercase bg-indigo-700 text-white">
         <tr>
           <th scope="col" className="px-6 py-3">
