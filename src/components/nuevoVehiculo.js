@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import TextField from '@mui/material/TextField';
 
 export default function NuevoVehiculo() {
     const navigate = useNavigate();
@@ -114,33 +115,37 @@ export default function NuevoVehiculo() {
     return (
         <div className='flex justify-center items-center mt-20'>
             <div className="p-6 w-1/2 border rounded-2xl shadow-md">
-                <h1 className="text-2xl font-bold mb-4">
+                <h1 className="text-2xl font-bold mb-4 text-center">
                     {modoEdicion ? 'Actualizar Vehículo' : 'Crear Nuevo Vehiculo'}
                 </h1>
                 <form onSubmit={submit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-600">Marca</label>
-                        <input
-                            type="text"
-                            className="border w-full p-2 rounded"
+                    <label className="block text-sm font-medium text-gray-600">Marca</label>
+
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            placeholder="Ford, Nissan, Toyota"
                             value={vehiculo.marca}
                             onChange={(e) => setVehiculo({ ...vehiculo, marca: e.target.value })}
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-600">Modelo</label>
-                        <input
-                            type="text"
-                            className="border w-full p-2 rounded"
+                    <label className="block text-sm font-medium text-gray-600">Modelo</label>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            placeholder="Ranger, Frontier, Corolla"
                             value={vehiculo.modelo}
                             onChange={(e) => setVehiculo({ ...vehiculo, modelo: e.target.value })}
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-600">Placa</label>
-                        <input
-                            type="text"
-                            className="border w-full p-2 rounded"
+                    <label className="block text-sm font-medium text-gray-600">Placa</label>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            placeholder="HN25225"
                             value={vehiculo.placa}
                             onChange={(e) => setVehiculo({ ...vehiculo, placa: e.target.value })}
                         />

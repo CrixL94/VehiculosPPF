@@ -94,8 +94,6 @@ export default function EntradasSalidas() {
             <MenuItem value="">Limpiar Filtros</MenuItem>
           </Select>
         </FormControl>
-
-
       </Box>
 
       <div className="overflow-x-auto shadow-md rounded-2xl mt-5 h-auto">
@@ -133,7 +131,7 @@ export default function EntradasSalidas() {
                   <td className="px-6 py-4">{entradaSalida.hora}</td>
                   <td className="px-6 py-4">{entradaSalida.kilometraje}</td>
                   <td className={`px-6 py-4 ${entradaSalida.estado.nombreEstado === 'Entrada' ? 'text-green-500' : 'text-red-500'}`}>{entradaSalida.estado.nombreEstado}</td>
-                  <td className="py-4">
+                  {/* <td className="py-4">
                     <Link>
                       <button className="text-gray-900 font-semibold text-sm">
                         <FontAwesomeIcon icon={faEdit} />
@@ -142,7 +140,7 @@ export default function EntradasSalidas() {
                     <button className="text-red-700 font-semibold text-sm ml-5">
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))
             ) : (
