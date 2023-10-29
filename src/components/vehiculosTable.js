@@ -84,7 +84,7 @@ export default function Vehiculos() {
         </Link>
       </div>
 
-      <div className="overflow-x-auto shadow-md rounded-2xl mt-5 h-[30rem]">
+      <div className={`overflow-x-auto shadow-md rounded-2xl mt-5 ${vehiculosFiltrados.length > 8 ? 'h-[30rem]' : 'h-auto'}`}>
         <table className="w-full text-sm text-left table-auto overflow-auto">
           <thead className="text-xs uppercase bg-indigo-700 text-white">
             <tr>
