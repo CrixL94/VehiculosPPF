@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from 'sweetalert2';
 
 export default function Vehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
@@ -16,6 +17,43 @@ export default function Vehiculos() {
         console.error('Error al obtener la lista de vehículos:', error);
       });
   }, []);
+
+  // Funcion para eliminar de un vehiculo
+  const eliminarVehiculo = (id) => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //realiza la solicitud de eliminacion
+        axios.delete(`http://localhost:9000/api/delete-vehiculo/${id}`)
+          .then(() => {
+            Swal.fire(
+              '¡Eliminado!',
+              'Tu registro ha sido eliminado.',
+              'success'
+            );
+            // Recarga la lista de vehiculos despues de la eliminacion
+            axios.get('http://localhost:9000/api/get-vehiculos')
+              .then((response) => {
+                setVehiculos(response.data);
+              })
+              .catch((error) => {
+                console.error('Error al obtener la lista de vehículos:', error);
+              });
+          })
+          .catch((error) => {
+            console.error('Error al eliminar el vehículo:', error);
+          });
+      }
+    });
+  };
 
   return (
     <div className="p-6">
@@ -64,7 +102,7 @@ export default function Vehiculos() {
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                   </Link>
-                  <button className="text-red-700 font-semibold text-sm ml-5">
+                  <button onClick={() => eliminarVehiculo(vehiculo._id)} className="text-red-700 font-semibold text-sm ml-5">
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </td>
@@ -74,8 +112,6 @@ export default function Vehiculos() {
         </table>
       </div>
     </div>
-
-
   );
 }
 
