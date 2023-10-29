@@ -3,10 +3,28 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { } from '@mui/material/Select';
 
 export default function EntradasSalidas() {
   const [entradasSalidas, setEntradasSalidas] = useState([]);
   const [filtroMotorista, setFiltroMotorista] = useState('');
+  const [filtroEstado, setFiltroEstado] = useState('');
+  const [estados, setEstados] = useState([]);
+
+  useEffect(() => {
+    // Llamada a la API para obtener los estados
+    axios.get('http://localhost:9000/api/get-estados')
+      .then((response) => {
+        setEstados(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener la lista de estados:', error);
+      });
+  }, []);
+
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/get-entradas')
@@ -24,18 +42,23 @@ export default function EntradasSalidas() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Funcion para filtrar la busqueda por motorits
+  // Funcion para filtrar la busqueda por motorista
   const buscarMotorista = (e) => {
     setFiltroMotorista(e.target.value);
   };
 
-  // Filtrar los resultados en función del motorista
+  // Filtrar los resultados en funcion del motorista
   const entradasFiltradas = entradasSalidas.filter((entradaSalida) => {
-    if (!filtroMotorista) {
-      return true; // Si no se ha ingresado un motorista, muestra todo.
-    }
-    return entradaSalida.motorista.toLowerCase().includes(filtroMotorista.toLowerCase());
+    const motoristaMatch = !filtroMotorista || entradaSalida.motorista.toLowerCase().includes(filtroMotorista.toLowerCase());
+    const estadoMatch = !filtroEstado || entradaSalida.estado.nombreEstado === filtroEstado;
+    return motoristaMatch && estadoMatch;
   });
+
+
+  const handleFiltroEstadoChange = (event) => {
+    setFiltroEstado(event.target.value);
+  };
+
 
   return (
     <div className="p-6">
@@ -54,6 +77,26 @@ export default function EntradasSalidas() {
           </button>
         </Link>
       </div>
+
+      <Box sx={{ minWidth: 120 }}>
+        <h2 className='text-gray-400 uppercase'>Filtar por estado</h2>
+        <FormControl className='w-[9rem]'>
+          <Select
+            id="filtro-estado"
+            value={filtroEstado}
+            onChange={handleFiltroEstadoChange}
+          >
+            {estados.map((estado) => (
+              <MenuItem key={estado.nombreEstado} value={estado.nombreEstado}>
+                {estado.nombreEstado}
+              </MenuItem>
+            ))}
+            <MenuItem value="">Limpiar Filtros</MenuItem>
+          </Select>
+        </FormControl>
+
+
+      </Box>
 
       <div className="overflow-x-auto shadow-md rounded-2xl mt-5 h-auto">
         <table className="w-full text-sm text-left table-auto overflow-auto">
@@ -105,7 +148,7 @@ export default function EntradasSalidas() {
             ) : (
               <tr>
                 <td colSpan="7" className="text-center items-center justify-center py-4">
-                  No existen registros de entradas y salidas.
+                  No existen registros de entradas o salidas con ese nombre.
                 </td>
               </tr>
             )}
